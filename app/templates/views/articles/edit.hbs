@@ -1,0 +1,58 @@
+<div class="align-items-center pt-3 pb-2 mb-3">
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/articles">Articles</a></li>
+        <li class="breadcrumb-item"><a href="">View</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{article.name}}</li>
+    </ol>
+    </nav>     
+</div>
+
+<div id="mainCard" class="card col-sm-6" style="margin: 0 auto" >
+  <span data-feather="package" style="width: 150px; height: 150px; margin:10px auto"></span>
+  <div class="card-body">
+    <h5 class="card-title">{{article.name}}</h5>
+    <p class="card-text">
+    <form id="frmEdit" action="javascript:submitform()">
+        <input type="hidden" name="id" value="{{article.id}}">
+        <div class="form-group">
+            <label for="formGroupExampleInput">Name</label>
+            <input type="text" class="form-control" name="name" value="{{article.name}}">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Description</label>
+            <input type="text" class="form-control" name="description" value="{{article.description}}">
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>        
+    </p>    
+  </div>
+</div>
+
+<script>
+function submitform()
+{
+    var frm = $('#frmEdit');
+    var card = $('#mainCard');
+    var formData = serializeObject(frm);
+
+    showLoader();
+    $.post('/articles/edit',formData,
+    function(data)
+    {
+        if(data.success === true)
+        {
+            window.location = '/articles';
+            return;
+        }
+        
+        hideLoader();
+        alert(data.message);
+    },'JSON').fail(function(ex)
+    {
+        hideLoader();
+        console.error(ex);
+        alert('An error occurred on server, please try again later.')
+    });
+}
+</script>

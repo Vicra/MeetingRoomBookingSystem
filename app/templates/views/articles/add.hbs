@@ -1,0 +1,57 @@
+<div class="align-items-center pt-3 pb-2 mb-3">
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/articles">Articles</a></li>
+        <li class="breadcrumb-item"><a href="">Add</a></li>
+        <li class="breadcrumb-item active" aria-current="page">New Article</li>
+    </ol>
+    </nav>     
+</div>
+
+<div id="mainCard" class="card col-sm-6" style="margin: 0 auto" >
+  <span data-feather="package" style="width: 150px; height: 150px; margin:10px auto"></span>
+  <div class="card-body">
+    <p class="card-text">
+    <form id="frmAdd" action="javascript:submitform()">
+        <div class="form-group">
+            <label for="formGroupExampleInput">Article Name</label>
+            <input type="text" class="form-control" name="name" value="" required>
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Description</label>
+            <input type="text" class="form-control" name="description" value="" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>        
+    </p>    
+  </div>
+</div>
+
+<script>
+function submitform()
+{
+    var frm = $('#frmAdd');
+    var card = $('#mainCard');
+    var formData = serializeObject(frm);
+
+    showLoader();
+    console.log(formData);
+    $.post('/articles/add',formData,
+    function(data)
+    {
+        if(data.success === true)
+        {
+            window.location = '/articles';
+            return;
+        }
+        
+        hideLoader();
+        alert(data.message);
+    },'JSON').fail(function(ex)
+    {
+        hideLoader();
+        console.error(ex);
+        alert('An error occurred on server, please try again later.')
+    });
+}
+</script>

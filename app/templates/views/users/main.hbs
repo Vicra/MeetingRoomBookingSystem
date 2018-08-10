@@ -1,0 +1,95 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Users</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <button class="btn btn-sm btn-outline-secondary" onclick="window.location='/users/add'">
+          <span data-feather="plus-circle"></span>
+          Add User
+        </button>        
+    </div>      
+</div>
+
+<div class="my-3 p-3 bg-white rounded box-shadow">
+    {{#each users}}
+        <div id="row_{{ID}}" class="media text-muted pt-3">
+            <img src="http://www.skywardimaging.com/wp-content/uploads/2015/11/default-user-image.png" alt="userimg" data-holder-rendered="true" style="width: 32px; height: 32px; margin-right:10px">
+            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+            <strong class="d-block text-gray-dark">{{Name}} ({{Role}}) <span class="badge badge-success">Active</span></strong>
+            {{Email}}
+            </p>          
+            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example" style="position:absolute;right:35px">
+                <button type="button" class="btn btn-secondary" onclick="window.location='/users/view?id={{ID}}'"><span data-feather="info"></span></button>
+                <button type="button" class="btn btn-secondary" onclick="window.location='/users/edit?id={{ID}}'"><span data-feather="edit"></span></button>
+                <button type="button" class="btn btn-secondary" onclick="deleteprompt({{ID}})" {{#ifCond ID '==' ../session.userAccount.ID}}disabled{{/ifCond}}><span data-feather="trash"></span></button>
+            </div>                        
+        </div>
+    {{/each}}
+</div>
+
+
+<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Are you sure?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this user?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button id="btnDelete" type="button" class="btn btn-danger">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+    function deleteprompt(id)
+    {
+        var mdl = $('#deleteModal');
+        var btn = $('#btnDelete');
+
+        if($(this).prop('disabled'))
+            return;
+
+        $(btn).unbind('click').click(function()
+        {
+            DeleteUser(id);
+        });
+
+        console.log('Opening Modal');
+        $(mdl).modal('show');
+
+    }
+
+    function DeleteUser(id)
+    {
+        var mdl = $('#deleteModal');
+
+        showLoader(mdl);
+        $.post('/users/delete',{userid:id},
+        function(data)
+        {
+            hideLoader(mdl);            
+            if(data.success === true)
+            {
+                $(mdl).modal('hide');
+                $('#row_'+id).fadeOut(function()
+                {
+                    $(this).remove();
+                });
+                return;
+            }                        
+            alert(data.message);
+        },'JSON').fail(function(ex)
+        {
+            hideLoader(mdl);
+            console.error(ex);
+            alert('An error occurred on server, please try again later.')
+        });
+    }
+</script>

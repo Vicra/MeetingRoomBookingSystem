@@ -1,0 +1,41 @@
+<div class="align-items-center pt-3 pb-2 mb-3">
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/users">Users</a></li>
+        <li class="breadcrumb-item"><a href="">View</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{user.Name}}</li>
+    </ol>
+    </nav>     
+</div>
+
+<div class="card col-sm-6" style="margin: 0 auto" >
+  <img class="card-img-top" src="http://www.skywardimaging.com/wp-content/uploads/2015/11/default-user-image.png" style="max-width:256px; margin:10px auto -12px" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{user.Name}}</h5>
+    <p class="card-text">
+    <form>
+  <div class="form-group">
+    <label for="formGroupExampleInput">Email</label>
+    <input type="text" class="form-control" value="{{user.Email}}" readonly>
+  </div>
+  <div class="form-group">
+    <label for="formGroupExampleInput">Starting Date</label>
+    <input type="text" class="form-control" value="{{user.StartingDate}}" readonly>
+  </div>
+  <div class="form-group">
+    <label for="formGroupExampleInput">Salary</label>
+    <input type="text" class="form-control" value="{{user.Salary}}" readonly>
+  </div>    
+  <div class="form-group">
+    <label for="formGroupExampleInput">Role</label>
+    <input type="text" class="form-control" value="{{user.Role}}" readonly>
+  </div>
+  <div class="form-group">
+    <label for="formGroupExampleInput">Department</label>
+    <input type="text" class="form-control" value="{{user.Department}}" readonly>
+  </div>      
+    </form>        
+    </p>
+    <a href="/users/edit?id={{user.ID}}" class="btn btn-primary"><span data-feather="edit"></span> Edit</a>
+  </div>
+</div>

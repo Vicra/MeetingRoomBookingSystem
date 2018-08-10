@@ -1,0 +1,145 @@
+<div class="align-items-center pt-3 pb-2 mb-3">
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/rooms">Rooms</a></li>
+        <li class="breadcrumb-item"><a href="">Add</a></li>
+        <li class="breadcrumb-item active" aria-current="page">New Room</li>
+    </ol>
+    </nav>     
+</div>
+
+<div id="mainCard" class="card col-sm-6" style="margin: 0 auto" >
+  <img class="card-img-top" src="https://cdn1.iconfinder.com/data/icons/tourism-travel-2-1/256/Meeting_Room-512.png" 
+    style="max-width:256px; margin:10px auto -12px" alt="Card image cap">
+  <div class="card-body">
+    <p class="card-text">
+    <form id="frmAdd" action="javascript:submitform()">
+        <div class="form-group">
+            <label for="formGroupExampleInput">Room Name</label>
+            <input type="text" class="form-control" name="name" value="" required>
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Description</label>
+            <input type="text" class="form-control" name="description" value="" required>
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">People Count</label>
+            <input type="number" class="form-control" name="peopleCount" value="" required>
+        </div>
+        <hr>
+        <h5 class="card-title">Room Equipment</h5>
+        {{#each articles}}
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <input type="checkbox" aria-label="Checkbox for following text input" 
+                            id="cb_{{name}}" value="{{id}}" class="equipmentClass">
+                    </div>
+                </div>
+                <label class="form-control">{{name}}</label>
+                <input type="number" class="form-control" aria-label="Text input with checkbox" 
+                    placeholder="Amount" id="amount_{{name}}" disabled>
+            </div>
+        {{/each}}
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>        
+    </p>    
+  </div>
+</div>
+
+<script>
+    function submitform()
+    {
+        var frm = $('#frmAdd');
+        var card = $('#mainCard');
+        var formData = serializeObject(frm);
+
+        showLoader();
+        var postData = {};
+        postData.name = formData.name;
+        postData.description = formData.description;
+        postData.peopleCount = parseInt(formData.peopleCount);
+
+        var amountsAreValid = validateArticlesAmounts();
+        if(amountsAreValid){
+            postData.articles = generateArticlesParameter();
+            
+            $.ajax({
+                type: "POST",
+                url: '/rooms/add',
+                data: JSON.stringify(postData),
+                contentType: 'application/json',
+                dataType: 'JSON'
+            }).done(function(data)
+            {
+                if(data.success === true)
+                {
+                    window.location = '/rooms';
+                    return;
+                }
+                
+                hideLoader();
+                alert(data.message);
+            }).fail(function(ex)
+            {
+                hideLoader();
+                console.error(ex);
+                alert('An error occurred on server, please try again later.');
+            });
+        }
+        else{
+            alert('Amounts must be greater than 0.');
+        }
+    }
+
+    function validateArticlesAmounts(){
+        {{#each articles}}
+            if(!document.getElementById('amount_{{name}}').disabled){
+                if(document.getElementById('amount_{{name}}').value <= 0){
+                    return false;
+                }
+            }
+        {{/each}}
+        return true;
+    }
+
+    function generateArticlesParameter(){
+        /* 
+        this funcion articles
+        data to be sent to the controller similir to the 
+        below structure:
+            [
+                {
+                    amount: "1"
+                    articleid: "1"
+                },
+                {
+                    amount: "1"
+                    articleid: "2"
+                }
+            ]
+        */
+        var articles = $(".equipmentClass:checked").map(function() {
+            var amountObjectId = "amount" + this.id.substr(2);
+            return  {
+                        articleid: this.value,
+                        amount : document.getElementById(amountObjectId).value
+                    };
+        }).get();
+        return articles;
+    }
+</script>
+
+{{#each articles}}
+    <script>
+        document.getElementById('cb_{{name}}').onchange = function() {
+            document.getElementById('amount_{{name}}').disabled = !this.checked;
+            if(!this.checked){
+                document.getElementById('amount_{{name}}').value = "";
+            }
+            else{
+                document.getElementById('amount_{{name}}').value = 1;
+            }
+        };
+    </script>
+{{/each}}

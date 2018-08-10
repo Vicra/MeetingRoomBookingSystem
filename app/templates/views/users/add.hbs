@@ -1,0 +1,107 @@
+<div class="align-items-center pt-3 pb-2 mb-3">
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/users">Users</a></li>
+        <li class="breadcrumb-item"><a href="">Add</a></li>
+        <li class="breadcrumb-item active" aria-current="page">New User</li>
+    </ol>
+    </nav>     
+</div>
+
+<div id="mainCard" class="card col-sm-6" style="margin: 0 auto" >
+  <img class="card-img-top" src="http://www.skywardimaging.com/wp-content/uploads/2015/11/default-user-image.png" style="max-width:256px; margin:10px auto -12px" alt="Card image cap">
+  <div class="card-body">
+    <p class="card-text">
+    <form id="frmAdd" action="javascript:submitform()">
+        <div class="form-group">
+            <label for="formGroupExampleInput">Name</label>
+            <input type="text" class="form-control" name="name" value="" required>
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Email</label>
+            <input type="email" class="form-control" name="email" value="" required>
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Starting Date</label>
+            <input type="date" class="form-control" name="startingdate" value="" required>
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Salary</label>
+            <input type="number" class="form-control" name="salary" value="" required>
+        </div>    
+        <div class="form-group">
+            <label for="formGroupExampleInput">Role</label>
+            <select class="form-control" id="inputroles" name="roleid" required>
+                {{#each roles}}
+                    <option value="{{ID}}">{{Role}}</option>
+                {{/each}}
+            </select>    
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Department</label>
+            <select class="form-control" id="inputdepartment" name="departmentid" required>
+                {{#each departments}}
+                    <option value="{{ID}}">{{Name}}</option>
+                {{/each}}
+            </select>    
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Password</label>
+            <input type="password" min="3" class="form-control" name="password" value="" required>
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Confirm Password</label>
+            <input type="password" min="3" class="form-control" name="cpassword" value="" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>        
+    </p>    
+  </div>
+</div>
+
+<script>
+function submitform()
+{
+    var frm = $('#frmAdd');
+    var card = $('#mainCard');
+    var formData = serializeObject(frm);
+    formData.salary = parseInt(formData.salary);
+    var postForm = {};
+
+
+
+    if(formData.password != formData.cpassword)
+    {
+        alert('Passwords do not match');
+        return;
+    }
+
+    postForm.departmentid = formData.departmentid;
+    postForm.email = formData.email;
+    postForm.name = formData.name;
+    postForm.password = formData.password;
+    postForm.roleid = formData.roleid;
+    postForm.salary = formData.salary;
+    postForm.startingdate = formData.startingdate;
+
+    showLoader();
+    $.post('/users/add',postForm,
+    function(data)
+    {
+        if(data.success === true)
+        {
+            window.location = '/users';
+            return;
+        }
+        
+        hideLoader();
+        alert(data.message);
+    },'JSON').fail(function(ex)
+    {
+        hideLoader();
+        console.error(ex);
+        alert('An error occurred on server, please try again later.')
+    });
+}
+</script>
