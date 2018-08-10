@@ -13,7 +13,7 @@ async function validLogin(email, password)
     if(Account.length > 0)
     {        
         Account = Account[0];
-        if(fw.utils.getMD5(password+Account.Salt) == Account.Password)
+        if(fw.utils.getMD5(password+Account.salt) == Account.password)
             return Account;
     }
         

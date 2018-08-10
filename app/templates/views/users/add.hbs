@@ -22,26 +22,10 @@
             <input type="email" class="form-control" name="email" value="" required>
         </div>
         <div class="form-group">
-            <label for="formGroupExampleInput">Starting Date</label>
-            <input type="date" class="form-control" name="startingdate" value="" required>
-        </div>
-        <div class="form-group">
-            <label for="formGroupExampleInput">Salary</label>
-            <input type="number" class="form-control" name="salary" value="" required>
-        </div>    
-        <div class="form-group">
             <label for="formGroupExampleInput">Role</label>
             <select class="form-control" id="inputroles" name="roleid" required>
                 {{#each roles}}
-                    <option value="{{ID}}">{{Role}}</option>
-                {{/each}}
-            </select>    
-        </div>
-        <div class="form-group">
-            <label for="formGroupExampleInput">Department</label>
-            <select class="form-control" id="inputdepartment" name="departmentid" required>
-                {{#each departments}}
-                    <option value="{{ID}}">{{Name}}</option>
+                    <option value="{{id}}">{{name}}</option>
                 {{/each}}
             </select>    
         </div>
@@ -66,10 +50,7 @@ function submitform()
     var frm = $('#frmAdd');
     var card = $('#mainCard');
     var formData = serializeObject(frm);
-    formData.salary = parseInt(formData.salary);
     var postForm = {};
-
-
 
     if(formData.password != formData.cpassword)
     {
@@ -77,13 +58,10 @@ function submitform()
         return;
     }
 
-    postForm.departmentid = formData.departmentid;
     postForm.email = formData.email;
     postForm.name = formData.name;
     postForm.password = formData.password;
     postForm.roleid = formData.roleid;
-    postForm.salary = formData.salary;
-    postForm.startingdate = formData.startingdate;
 
     showLoader();
     $.post('/users/add',postForm,

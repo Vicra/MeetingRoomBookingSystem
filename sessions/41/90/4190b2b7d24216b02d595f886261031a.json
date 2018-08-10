@@ -1,0 +1,1 @@
+{"key":{"segment":"sessions","id":"80a84fe0-9ce8-11e8-ab2d-857238e45d82"},"ttl":259200000,"item":{"userAccount":{"id":25,"name":"admin","email":"admin@gmail.com","password":"81585226e85402edac2bae633d6ee057","role_id":1,"salt":"9ed63d5d-c16a-492e-814e-276ba909093c"},"jsid":"80a84fe0-9ce8-11e8-ab2d-857238e45d82"},"stored":1533938303967,"expires":"2018-08-13T21:58:23.967Z"}

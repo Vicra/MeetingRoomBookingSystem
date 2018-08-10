@@ -3,7 +3,6 @@
 //====================
 const usersService = fw.getService('user');
 const rolesService = fw.getService('roles');
-const departmentsService = fw.getService('departments');
 
 //====================
 // Methods
@@ -64,7 +63,6 @@ function renderEdit(request,h)
         {
             user:user[0],
             roles: await rolesService.getRoles(),
-            departments: await departmentsService.getDepartments(), 
             session: request.auth.credentials
         }));
     });
@@ -83,7 +81,6 @@ function renderAdd(request,h)
         resolve(h.view('views/users/add', 
         {
             roles: await rolesService.getRoles(),
-            departments: await departmentsService.getDepartments(), 
             session: request.auth.credentials
         }));
     });
@@ -110,14 +107,11 @@ function addUser(request, h)
 
         const Params = 
         {
-            Name: request.payload.name,
-            Password: hashPassword,
-            Salt: salt,
-            Salary: request.payload.salary, 
-            StartingDate: request.payload.startingdate, 
-            Email: request.payload.email, 
-            DepartmentId: request.payload.departmentid, 
-            RoleId: request.payload.roleid
+            name: request.payload.name,
+            password: hashPassword,
+            salt: salt,
+            email: request.payload.email, 
+            roleid: request.payload.roleid
         }
     
         await usersService.addUser(Params);

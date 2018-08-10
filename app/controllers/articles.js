@@ -3,7 +3,6 @@
 //====================
 const articleService = fw.getService('article');
 const rolesService = fw.getService('roles');
-const departmentsService = fw.getService('departments');
 
 //====================
 // Methods

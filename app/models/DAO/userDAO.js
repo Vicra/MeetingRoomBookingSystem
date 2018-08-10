@@ -9,19 +9,17 @@
 async function getUsers()
 {
     const SQL = 
-    `SELECT Users.*, Department.Name as 'Department', Roles.Role FROM Users
-    INNER JOIN Roles ON Users.RoleId = Roles.ID
-    INNER JOIN Department ON Users.DepartmentId = Department.ID`;
+    `SELECT Users.*, Roles.name as role FROM Users
+    INNER JOIN Roles ON Users.role_id = Roles.id`;
     return await fw.db.execute('local',SQL);
 }
 
 async function getUser(id)
 {
     const SQL = 
-    `SELECT Users.*, Department.Name as 'Department', Roles.Role FROM Users
-    INNER JOIN Roles ON Users.RoleId = Roles.ID
-    INNER JOIN Department ON Users.DepartmentId = Department.ID
-    WHERE Users.ID = ?`;
+    `SELECT Users.*, Roles.name as role FROM Users
+    INNER JOIN Roles ON Users.role_id = Roles.id
+    WHERE Users.id = ?`;
     return await fw.db.execute('local',SQL,[id]);
 }
 
@@ -29,26 +27,23 @@ async function getUserbyEmail(email)
 {
     const SQL = 
     `SELECT * FROM Users
-    WHERE UPPER(Email) LIKE ?`;
-    return await fw.db.execute('local',SQL,[`%${email.toUpperCase()}%`]);
+    WHERE UPPER(Email) = ?`;
+    return await fw.db.execute('local',SQL,[`${email.toUpperCase()}`]);
 }
 
 async function addUser(data)
 {
     const SQL = 
-    `INSERT INTO Users(Name,Salary,StartingDate,Email,Password,DepartmentId,RoleId,Salt)
+    `INSERT INTO Users(name,email,password,role_id,salt)
     VALUES
-    (?,?,?,?,?,?,?,?)`;
+    (?,?,?,?,?)`;
     return await fw.db.execute('local',SQL,
     [
-        data.Name,
-        data.Salary, 
-        data.StartingDate, 
-        data.Email, 
-        data.Password,
-        data.DepartmentId, 
-        data.RoleId,
-        data.Salt
+        data.name,
+        data.email, 
+        data.password,
+        data.roleid,
+        data.salt
     ]);
 }
 
@@ -56,20 +51,14 @@ async function updateUser(data)
 {
     const SQL = 
     `UPDATE Users
-    SET Salary = ?,
-    StartingDate = ?,
-    Email = ?,
-    DepartmentId = ?,
-    RoleId = ?
-    WHERE ID = ?`;
+    email = ?,
+    role_id = ?
+    WHERE id = ?`;
     return await fw.db.execute('local',SQL,
     [
-        data.Salary, 
-        data.StartingDate, 
-        data.Email, 
-        data.DepartmentId, 
-        data.RoleId, 
-        data.ID
+        data.email, 
+        data.role_id,
+        data.id
     ]);
 }
 

@@ -10,16 +10,16 @@
 
 <div class="my-3 p-3 bg-white rounded box-shadow">
     {{#each users}}
-        <div id="row_{{ID}}" class="media text-muted pt-3">
+        <div id="row_{{id}}" class="media text-muted pt-3">
             <img src="http://www.skywardimaging.com/wp-content/uploads/2015/11/default-user-image.png" alt="userimg" data-holder-rendered="true" style="width: 32px; height: 32px; margin-right:10px">
             <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">{{Name}} ({{Role}}) <span class="badge badge-success">Active</span></strong>
-            {{Email}}
+            <strong class="d-block text-gray-dark">{{name}} ({{role}}) <span class="badge badge-success">Active</span></strong>
+            {{email}}
             </p>          
             <div class="btn-group btn-group-sm" role="group" aria-label="Basic example" style="position:absolute;right:35px">
-                <button type="button" class="btn btn-secondary" onclick="window.location='/users/view?id={{ID}}'"><span data-feather="info"></span></button>
-                <button type="button" class="btn btn-secondary" onclick="window.location='/users/edit?id={{ID}}'"><span data-feather="edit"></span></button>
-                <button type="button" class="btn btn-secondary" onclick="deleteprompt({{ID}})" {{#ifCond ID '==' ../session.userAccount.ID}}disabled{{/ifCond}}><span data-feather="trash"></span></button>
+                <button type="button" class="btn btn-secondary" onclick="window.location='/users/view?id={{id}}'"><span data-feather="info"></span></button>
+                <button type="button" class="btn btn-secondary" onclick="window.location='/users/edit?id={{id}}'"><span data-feather="edit"></span></button>
+                <button type="button" class="btn btn-secondary" onclick="deleteprompt({{id}})" {{#ifCond id '==' ../session.userAccount.ID}}disabled{{/ifCond}}><span data-feather="trash"></span></button>
             </div>                        
         </div>
     {{/each}}

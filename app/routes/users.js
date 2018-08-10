@@ -17,10 +17,7 @@ module.exports =
             {
                 name:         fw.param.string().required(),
                 password:     fw.param.string().required(),
-                salary:       fw.param.number().required(),
-                startingdate: fw.param.string().required(),
                 email:        fw.param.string().required(),
-                departmentid: fw.param.string().required(),
                 roleid:       fw.param.string().required()
             }
         }                
@@ -37,10 +34,7 @@ module.exports =
           payload: 
           {
               userid:       fw.param.number().required(),
-              salary:       fw.param.number().required(),
-              startingdate: fw.param.date().required(),
               email:        fw.param.string().email().required(),
-              departmentid: fw.param.number().required(),
               roleid:       fw.param.number().required()
           }        
         }
