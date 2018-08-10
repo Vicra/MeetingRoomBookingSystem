@@ -24,8 +24,8 @@ async function getArticleByName(name)
 {
     const SQL = 
     `SELECT * FROM Articles
-    WHERE UPPER(name) = ?`;
-    return await fw.db.execute('local',SQL,[`${name.toUpperCase()}`]);
+    WHERE name = ?`;
+    return await fw.db.execute('local',SQL,[name]);
 }
 
 async function getArticleById(id)
@@ -92,7 +92,7 @@ async function deleteArticle(id)
     const deleteRoomArticlesSQL = 
     `DELETE FROM Rooms_Articles
     WHERE article_id = ?`;
-    return await fw.db.execute('local',deleteRoomArticlesSQL,[id]);
+    await fw.db.execute('local',deleteRoomArticlesSQL,[id]);
 
     const deleteArticleSQL = 
     `DELETE FROM Articles

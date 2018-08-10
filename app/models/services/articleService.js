@@ -12,9 +12,9 @@ async function getArticles()
     return await articleDAO.getArticles();
 }
 
-async function getArticleByName(email)
+async function getArticleByName(name)
 {
-    return await articleDAO.getArticleByName(email);
+    return await articleDAO.getArticleByName(name);
 }
 
 async function getArticleById(id)

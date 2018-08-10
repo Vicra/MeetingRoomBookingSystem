@@ -37,6 +37,11 @@ async function deleteRoom(data)
     return await roomDAO.deleteRoom(data);
 }
 
+async function hasArticles(data)
+{
+    return await roomDAO.hasArticles(data);
+}
+
 module.exports = 
 {
     getRooms,
@@ -44,5 +49,6 @@ module.exports =
     getRoomByName,
     addRoom,
     updateRoom,
-    deleteRoom
+    deleteRoom,
+    hasArticles
 }

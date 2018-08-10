@@ -122,6 +122,15 @@ async function deleteRoom(id)
     return;
 }
 
+async function hasArticles(id)
+{
+    const SQL = 
+    `SELECT * 
+    FROM Rooms_Articles 
+    WHERE room_id = ?`;
+    var response = await fw.db.execute('local',SQL,[id]);
+    return (response.length) ? true : false;
+}
 
 module.exports = 
 {
@@ -130,5 +139,6 @@ module.exports =
     getRoom,
     addRoom,
     updateRoom,
-    deleteRoom
+    deleteRoom,
+    hasArticles
 }

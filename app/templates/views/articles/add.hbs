@@ -35,7 +35,6 @@ function submitform()
     var formData = serializeObject(frm);
 
     showLoader();
-    console.log(formData);
     $.post('/articles/add',formData,
     function(data)
     {

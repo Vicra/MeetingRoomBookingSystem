@@ -42,7 +42,8 @@ function renderView(request,h)
         resolve(h.view('views/rooms/view', {
             room:room[0], 
             session: request.auth.credentials,
-            articles: await articleService.getArticlesByRoomId(request.query.id)
+            articles: await articleService.getArticlesByRoomId(request.query.id),
+            hasArticles: await roomService.hasArticles(request.query.id)
         }));
     });
 }

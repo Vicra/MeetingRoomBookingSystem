@@ -24,23 +24,25 @@
         <input type="text" class="form-control" value="{{room.people_count}}" readonly>
       </div>
       <hr>
-      {{#ifCond articles.length ">" 0}}
+      {{#ifCond hasArticles "==" true}}
         <h5 class="card-title">Room Equipment</h5>
       {{/ifCond}}
-      {{#ifCond articles.length "==" 0}}
+      {{#ifCond hasArticles "==" false}}
         <div class="form-group">
           <label for="formGroupExampleInput">No equipment available for this room.</label>
         </div>
       {{/ifCond}}
       {{#each articles}}
-        <ul>
-          <li>
-            <div class="form-group">
-              <label for="formGroupExampleInput">{{amount}} {{name}} item(s)</label>
-            </div>
-          </li>
-        </ul>
-        {{/each}}
+        {{#ifCond amount ">" 0}}
+          <ul>
+            <li>
+              <div class="form-group">
+                <label for="formGroupExampleInput">{{amount}} {{name}} item(s)</label>
+              </div>
+            </li>
+          </ul>
+        {{/ifCond}}
+      {{/each}}
     </form>        
     </p>
     <a href="/rooms/edit?id={{room.id}}" class="btn btn-primary"><span data-feather="edit"></span> Edit</a>

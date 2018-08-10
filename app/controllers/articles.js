@@ -109,7 +109,7 @@ function editArticle(request, h)
         if(request.payload.name != article[0].name)
         {
             const articleExists = await articleService.getArticleByName(request.payload.name);
-            if(articleExists.length > 0)
+            if(articleExists.length > 0 && articleExists.name == request.payload.name)
             {
                 stResponse.message = "Article name is already in use.";
                 resolve(stResponse);
