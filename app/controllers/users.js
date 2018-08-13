@@ -135,7 +135,7 @@ function editUser(request, h)
         }
 
         //Make sure he is not adding an already existing email
-        if(request.payload.email != user[0].Email)
+        if(request.payload.email != user[0].email)
         {
             const userExist = await usersService.getUserbyEmail(request.payload.email);
             if(userExist.length > 0)
@@ -148,12 +148,9 @@ function editUser(request, h)
         
         const Params = 
         {
-            Salary: request.payload.salary, 
-            StartingDate: request.payload.startingdate, 
-            Email: request.payload.email, 
-            DepartmentId: request.payload.departmentid, 
-            RoleId: request.payload.roleid, 
-            ID: request.payload.userid
+            email: request.payload.email, 
+            roleid: request.payload.roleid, 
+            id: request.payload.userid
         }
     
         await usersService.updateUser(Params);

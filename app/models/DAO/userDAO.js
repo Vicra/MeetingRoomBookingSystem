@@ -49,15 +49,16 @@ async function addUser(data)
 
 async function updateUser(data)
 {
+    console.log(data);
     const SQL = 
     `UPDATE Users
-    email = ?,
+    SET email = ?,
     role_id = ?
     WHERE id = ?`;
     return await fw.db.execute('local',SQL,
     [
         data.email, 
-        data.role_id,
+        data.roleid,
         data.id
     ]);
 }
