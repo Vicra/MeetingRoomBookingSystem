@@ -9,7 +9,7 @@
 async function getUsers()
 {
     const SQL = 
-    `SELECT Users.*, Roles.name as role FROM Users
+    `SELECT Users.name, Users.id, Users.email,  Roles.name as role FROM Users
     INNER JOIN Roles ON Users.role_id = Roles.id`;
     return await fw.db.execute('local',SQL);
 }

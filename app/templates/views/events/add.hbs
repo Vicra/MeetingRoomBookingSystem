@@ -1,0 +1,119 @@
+<div class="align-items-center pt-3 pb-2 mb-3">
+    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/events">Events</a></li>
+        <li class="breadcrumb-item"><a href="">Book Room</a></li>
+        <li class="breadcrumb-item active" aria-current="page">New Event</li>
+    </ol>
+    </nav>     
+</div>
+
+<div id="mainCard" class="card col-sm-6" style="margin: 0 auto" >
+  <img class="card-img-top" src="https://cdn1.iconfinder.com/data/icons/tourism-travel-2-1/256/Meeting_Room-512.png" 
+    style="max-width:256px; margin:10px auto -12px" alt="Card image cap">
+  <div class="card-body">
+    <p class="card-text">
+    <form id="frmAdd" action="javascript:submitform()">
+        <div class="form-group">
+            <label for="formGroupExampleInput">Event Name</label>
+            <input type="text" class="form-control" name="name" value="" required>
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Event Type</label>
+            <select class="form-control" id="inputroles" name="eventType" required>
+                {{#each eventTypes}}
+                    <option value="{{id}}">{{name}}</option>
+                {{/each}}
+            </select>    
+        </div>
+
+        <div class="form-group">
+            <label>Book Date</label>
+            <input type="date" name="bookDate" max="3000-12-31" id="bookDate"
+                min="1000-01-01" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="formGroupExampleInput">Start Time</label>
+            <select class="form-control" id="inputStartTime">
+                <option value="06:30">06:30</option>
+                <option value="06:45">06:45</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="formGroupExampleInput">End Time</label>
+            <select class="form-control" id="inputStartTime">
+                <option value="06:30">06:30</option>
+                <option value="06:45">06:45</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Guests</label>
+            
+            <div class="autocomplete">
+                <input id="myInput" class="form-control" type="text" placeholder="Search guests">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Invited Guests: </label>
+            <ul id="invitedGuests">
+            </ul>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>       
+    </p>    
+  </div>
+</div>
+
+<script>
+    var users = JSON.parse('{{{json users}}}');
+    autocomplete(document.getElementById("myInput"), users);
+
+    $(function() {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+
+        var yyyy = today.getFullYear();
+        if(dd < 10){
+            dd = '0' + dd;
+        } 
+        if(mm<10){
+            mm = '0' + mm;
+        } 
+        var today = yyyy + '-' + mm + '-' + dd;
+        document.getElementById("bookDate").value = today;
+    });
+
+    function submitform()
+    {
+        var frm = $('#frmAdd');
+        var card = $('#mainCard');
+        var formData = serializeObject(frm);
+
+        showLoader();
+        $.ajax({
+            type: "POST",
+            url: '/events/add',
+            data: JSON.stringify(formData),
+            contentType: 'application/json',
+            dataType: 'JSON'
+        }).done(function(data)
+        {
+            if(data.success === true)
+            {
+                window.location = '/events';
+                return;
+            }
+            
+            hideLoader();
+            alert(data.message);
+        }).fail(function(ex)
+        {
+            hideLoader();
+            console.error(ex);
+            alert('An error occurred on server, please try again later.');
+        });
+    }
+</script>
