@@ -12,7 +12,13 @@ async function getUpcomingEvents()
     return await eventDAO.getUpcomingEvents();
 }
 
+async function addEvent(data)
+{
+    return await eventDAO.addEvent(data);
+}
+
 module.exports = 
 {
-    getUpcomingEvents
+    getUpcomingEvents,
+    addEvent
 }

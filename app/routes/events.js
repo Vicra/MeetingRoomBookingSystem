@@ -17,10 +17,10 @@ module.exports =
                 eventtype:      fw.param.number().required(),
                 roomid:         fw.param.number().required(),
                 userid:         fw.param.number().required(),
-                date:           fw.param.string().required(),
+                bookDate:       fw.param.string().required(),
                 starttime:      fw.param.string().required(),
                 endtime:        fw.param.string().required(),
-                participants:   fw.param.array().required()
+                guests:         fw.param.array().required()
             }
         }
       },

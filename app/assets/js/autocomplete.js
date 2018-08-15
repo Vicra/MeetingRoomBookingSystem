@@ -33,27 +33,31 @@ function autocomplete(inp, arr) {
                 /*make the matching letters bold:*/
                 b.innerHTML = "<strong>" + arr[i].name.substr(0, val.length) + "</strong>";
                 b.innerHTML += arr[i].name.substr(val.length);
+                b.innerHTML += " (" + arr[i].email + ")";
                 /*insert a input field that will hold the current array item's value:*/
                 b.innerHTML += "<input type='hidden' id='name' value='" + arr[i].name + "'>";
                 b.innerHTML += "<input type='hidden' id='id' value='" + arr[i].id + "'>";
+                b.innerHTML += "<input type='hidden' id='id' value='" + arr[i].email + "'>";
                 /*execute a function when someone clicks on the item value (DIV element):*/
                 b.addEventListener("click", function(e) {
                     elementoLi = document.createElement("LI");
                     var guestName = this.getElementsByTagName("input")[0].value;
-                    var guestId = this.getElementsByTagName("input")[1].value;
+                    var guestId = parseInt(this.getElementsByTagName("input")[1].value);
+                    var guestEmail = this.getElementsByTagName("input")[2].value;
                     elementoLi.setAttribute("class", "guest_" + guestId); 
                     // push values to array of selected guests
-                    if(!guestIsAlreadyAdded(selectedGuests, {id: guestId, name: guestName})){
-                        selectedGuests.push({id: guestId, name: guestName});
+                    if(!guestIsAlreadyAdded(selectedGuests, {id: guestId, name: guestName, email:guestEmail})){
+                        selectedGuests.push({id: guestId, name: guestName, email:guestEmail});
 
                         elementoLi.innerHTML = 
                             "<div>" + 
-                            "<img src=\"http://www.skywardimaging.com/wp-content/uploads/2015/11/default-user-image.png\" height=\"20\" width=\"20\" style=\"margin:5%\"></img>" +
-                            guestName + 
-                            "<a class=\"removeItem\"> x</a>"
+                            "<img src=\"http://www.skywardimaging.com/wp-content/uploads/2015/11/default-user-image.png\" height=\"20\" width=\"20\" style=\"margin:2%\"></img>" +
+                            guestName + " (" + guestEmail + ")" +
+                            "<a class=\"removeItem\"> x</a>" + 
                             "</div>" ;
                         var guestList = document.getElementById("invitedGuests");
                         guestList.appendChild(elementoLi);
+                        document.getElementById("myInput").value = "";
                     }
                     /*close the list of autocompleted values,
                     (or any other open lists of autocompleted values:*/
@@ -65,37 +69,41 @@ function autocomplete(inp, arr) {
 
         for (i = 0; i < arr.length; i++) {
             /*check if the item starts with the same letters as the text field value:*/
-            if (arr[i].name.toUpperCase().includes(val.toUpperCase()) && arr[i].name.substr(0, val.length).toUpperCase() != val.toUpperCase()) {
+            var name_email_search = arr[i].name + " (" + arr[i].email + ")";
+            if (name_email_search.toUpperCase().includes(val.toUpperCase()) && name_email_search.substr(0, val.length).toUpperCase() != val.toUpperCase()) {
                 /*create a DIV element for each matching element:*/
                 b = document.createElement("DIV");
                 
-                var startingPosition = arr[i].name.toUpperCase().indexOf(val.toUpperCase());
-                /*make the matching letters bold:*/
-                b.innerHTML = arr[i].name.substr(0, startingPosition -1);
-                b.innerHTML += "<strong>" + arr[i].name.substr(startingPosition, val.length) + "</strong>";
-                b.innerHTML += arr[i].name.substr(val.length);
+                var startingPosition = name_email_search.toUpperCase().indexOf(val.toUpperCase());
+                b.innerHTML = name_email_search.substr(0, startingPosition);
+                b.innerHTML += "<strong>" + name_email_search.substr(startingPosition, val.length) + "</strong>";
+                b.innerHTML += name_email_search.substr(startingPosition + val.length, name_email_search.length);
 
                 /*insert a input field that will hold the current array item's value:*/
                 b.innerHTML += "<input type='hidden' id='name' value='" + arr[i].name + "'>";
                 b.innerHTML += "<input type='hidden' id='id' value='" + arr[i].id + "'>";
+                b.innerHTML += "<input type='hidden' id='id' value='" + arr[i].email + "'>";
                 /*execute a function when someone clicks on the item value (DIV element):*/
                 b.addEventListener("click", function(e) {
                     elementoLi = document.createElement("LI");
                     var guestName = this.getElementsByTagName("input")[0].value;
-                    var guestId = this.getElementsByTagName("input")[1].value;
+                    var guestId = parseInt(this.getElementsByTagName("input")[1].value);
+                    var guestEmail = this.getElementsByTagName("input")[2].value;
+
                     elementoLi.setAttribute("class", "guest_" + guestId); 
                     // push values to array of selected guests
-                    if(!guestIsAlreadyAdded(selectedGuests, {id: guestId, name: guestName})){
-                        selectedGuests.push({id: guestId, name: guestName});
+                    if(!guestIsAlreadyAdded(selectedGuests, {id: guestId, name: guestName, email:guestEmail})){
+                        selectedGuests.push({id: guestId, name: guestName, email:guestEmail});
 
                         elementoLi.innerHTML = 
                             "<div>" + 
-                            "<img src=\"http://www.skywardimaging.com/wp-content/uploads/2015/11/default-user-image.png\" height=\"20\" width=\"20\" style=\"margin:5%\"></img>" +
-                            guestName + 
-                            "<a class=\"removeItem\"> x</a>"
+                            "<img src=\"http://www.skywardimaging.com/wp-content/uploads/2015/11/default-user-image.png\" height=\"20\" width=\"20\" style=\"margin:2%\"></img>" +
+                            guestName + " (" + guestEmail + ")" +
+                            "<a class=\"removeItem\"> x</a>" + 
                             "</div>" ;
                         var guestList = document.getElementById("invitedGuests");
                         guestList.appendChild(elementoLi);
+                        document.getElementById("myInput").value = "";
                     }
                     /*close the list of autocompleted values,
                     (or any other open lists of autocompleted values:*/
@@ -162,7 +170,7 @@ function autocomplete(inp, arr) {
         }
     }
 
-    function removeItem(id){
+    function removeGuestItem(id){
         var positionToRemove = -1;
         for (var i = 0; i < selectedGuests.length; i++) {
             if(selectedGuests[i].id == id){
@@ -179,11 +187,25 @@ function autocomplete(inp, arr) {
         closeAllLists(e.target);
         if(e.target && e.target.className == 'removeItem'){
             var itemClassName = e.target.parentNode.parentNode.className;
-            console.log(itemClassName);
             //remove html object
             $('.'+itemClassName).remove();
             //remove from array object
-            removeItem(itemClassName.split('_')[1]);
+            removeGuestItem(itemClassName.split('_')[1]);
         }
     });
+}
+
+function addOrganizerGuestItem(guest){
+    selectedGuests.push(guest);
+    // formar item
+    elementoLi = document.createElement("LI");
+    elementoLi.setAttribute("class", "guest_" + guest.id); 
+    elementoLi.innerHTML = 
+        "<div>" + 
+        "<img src=\"http://www.skywardimaging.com/wp-content/uploads/2015/11/default-user-image.png\" height=\"20\" width=\"20\" style=\"margin:2%\"></img>" +
+        guest.name + " <strong>(Organizer)</strong>" +
+        "</div>" ;
+
+    var guestList = document.getElementById("invitedGuests");
+    guestList.appendChild(elementoLi);
 }

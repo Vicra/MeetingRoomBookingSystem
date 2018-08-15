@@ -26,7 +26,50 @@ async function getUpcomingEvents()
     return await fw.db.execute('local',SQL);
 }
 
+async function addEvent(data)
+{
+    // '2018-08-13 22:31:01'
+    const insertEventSQL = 
+    `INSERT INTO Events
+        (room_id,
+        name,
+        start_time,
+        end_time,
+        user_id,
+        event_type_id)
+    VALUES
+    (?,?,?,?,?,?)`;
+    var response = await fw.db.execute('local',insertEventSQL,
+    [
+        data.roomid,
+        data.name,
+        data.bookDate + " " + data.starttime + ":00",
+        data.bookDate + " " + data.endtime + ":00",
+        data.userid,
+        data.eventtype
+    ]);
+
+    for (var i = 0; i < data.guests.length; i++) {
+        const insertParticipantSQL = 
+        `INSERT INTO Events_Participants
+            (event_id,
+            user_id,
+            confirm_attendance)
+        VALUES
+        (?,?,?)`;
+
+        await fw.db.execute('local',insertParticipantSQL,
+        [
+            response.insertId,
+            data.guests[i].id,
+            "no"
+        ]);
+    }
+    return response;
+}
+
 module.exports = 
 {
-    getUpcomingEvents
+    getUpcomingEvents,
+    addEvent
 }

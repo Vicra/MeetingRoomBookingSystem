@@ -4,6 +4,7 @@
 const eventService = fw.getService('event');
 const eventTypeService = fw.getService('eventType');
 const userService = fw.getService('user');
+const roomService = fw.getService('room');
 
 //====================
 // Methods
@@ -38,7 +39,8 @@ function renderAdd(request,h)
         {
             session: request.auth.credentials,
             eventTypes: await eventTypeService.getEventTypes(),
-            users: await userService.getUsers()
+            users: await userService.getUsers(),
+            rooms: await roomService.getRooms()
         }));
     });
     
@@ -56,10 +58,10 @@ function addEvent(request, h)
             eventtype: request.payload.eventtype,
             roomid: request.payload.roomid,
             userid: request.payload.userid,
-            date: request.payload.date,
+            bookDate: request.payload.bookDate,
             starttime: request.payload.starttime,
             endtime: request.payload.endtime,
-            participants: request.payload.participants
+            guests: request.payload.guests
         }
     
         await eventService.addEvent(Params);

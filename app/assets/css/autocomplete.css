@@ -34,8 +34,8 @@
 }
 
 .removeItem{
-    margin-left: 5%;
+    /* margin-left: 5%; */
     cursor: pointer;
     border-radius: 50%;
-    background: #e50000;
+    background: #C0C0C0;
 }

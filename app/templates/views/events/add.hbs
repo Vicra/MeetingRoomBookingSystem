@@ -15,49 +15,136 @@
     <p class="card-text">
     <form id="frmAdd" action="javascript:submitform()">
         <div class="form-group">
-            <label for="formGroupExampleInput">Event Name</label>
-            <input type="text" class="form-control" name="name" value="" required>
+            <label for="formGroupExampleInput">Room</label>
+            <select class="form-control" id="inputRooms" name="roomid" onchange="updateName()" required>
+                {{#each rooms}}
+                    <option value="{{id}}">{{name}}</option>
+                {{/each}}
+            </select>
         </div>
         <div class="form-group">
             <label for="formGroupExampleInput">Event Type</label>
-            <select class="form-control" id="inputroles" name="eventType" required>
+            <select class="form-control" id="inputTypes" name="eventtype" onchange="updateName()" required>
                 {{#each eventTypes}}
                     <option value="{{id}}">{{name}}</option>
                 {{/each}}
-            </select>    
+            </select>
         </div>
-
         <div class="form-group">
             <label>Book Date</label>
-            <input type="date" name="bookDate" max="3000-12-31" id="bookDate"
+            <input type="date" name="bookDate" max="3000-12-31" id="bookDate" onchange="updateName()"
                 min="1000-01-01" class="form-control">
         </div>
-
         <div class="form-group">
             <label for="formGroupExampleInput">Start Time</label>
-            <select class="form-control" id="inputStartTime">
+            <select class="form-control" id="inputStartTime" name="starttime" onchange="updateName()">
                 <option value="06:30">06:30</option>
                 <option value="06:45">06:45</option>
+                <option value="07:00">07:00</option>
+                <option value="07:15">07:15</option>
+                <option value="07:30">07:30</option>
+                <option value="07:45">07:45</option>
+                <option value="08:00">08:00</option>
+                <option value="08:15">08:15</option>
+                <option value="08:30">08:30</option>
+                <option value="08:45">08:45</option>
+                <option value="09:00">09:00</option>
+                <option value="09:15">09:15</option>
+                <option value="09:30">09:30</option>
+                <option value="09:45">09:45</option>
+                <option value="10:00">10:00</option>
+                <option value="10:15">10:15</option>
+                <option value="10:30">10:30</option>
+                <option value="10:45">10:45</option>
+                <option value="11:00">11:00</option>
+                <option value="11:15">11:15</option>
+                <option value="11:30">11:30</option>
+                <option value="11:45">11:45</option>
+                <option value="12:00">12:00</option>
+                <option value="12:15">12:15</option>
+                <option value="12:30">12:30</option>
+                <option value="12:45">12:45</option>
+                <option value="13:00">13:00</option>
+                <option value="13:15">13:15</option>
+                <option value="13:30">13:30</option>
+                <option value="13:45">13:45</option>
+                <option value="14:00">14:00</option>
+                <option value="14:15">14:15</option>
+                <option value="14:30">14:30</option>
+                <option value="14:45">14:45</option>
+                <option value="15:00">15:00</option>
+                <option value="15:15">15:15</option>
+                <option value="15:30">15:30</option>
+                <option value="15:45">15:45</option>
+                <option value="16:00">16:00</option>
+                <option value="16:15">16:15</option>
+                <option value="16:30">16:30</option>
+                <option value="16:45">16:45</option>
+                <option value="17:00">17:00</option>
             </select>
         </div>
-
         <div class="form-group">
             <label for="formGroupExampleInput">End Time</label>
-            <select class="form-control" id="inputStartTime">
+            <select class="form-control" id="inputEndTime" name="endtime" onchange="updateName()">
                 <option value="06:30">06:30</option>
                 <option value="06:45">06:45</option>
+                <option value="07:00">07:00</option>
+                <option value="07:15">07:15</option>
+                <option value="07:30">07:30</option>
+                <option value="07:45">07:45</option>
+                <option value="08:00">08:00</option>
+                <option value="08:15">08:15</option>
+                <option value="08:30">08:30</option>
+                <option value="08:45">08:45</option>
+                <option value="09:00">09:00</option>
+                <option value="09:15">09:15</option>
+                <option value="09:30">09:30</option>
+                <option value="09:45">09:45</option>
+                <option value="10:00">10:00</option>
+                <option value="10:15">10:15</option>
+                <option value="10:30">10:30</option>
+                <option value="10:45">10:45</option>
+                <option value="11:00">11:00</option>
+                <option value="11:15">11:15</option>
+                <option value="11:30">11:30</option>
+                <option value="11:45">11:45</option>
+                <option value="12:00">12:00</option>
+                <option value="12:15">12:15</option>
+                <option value="12:30">12:30</option>
+                <option value="12:45">12:45</option>
+                <option value="13:00">13:00</option>
+                <option value="13:15">13:15</option>
+                <option value="13:30">13:30</option>
+                <option value="13:45">13:45</option>
+                <option value="14:00">14:00</option>
+                <option value="14:15">14:15</option>
+                <option value="14:30">14:30</option>
+                <option value="14:45">14:45</option>
+                <option value="15:00">15:00</option>
+                <option value="15:15">15:15</option>
+                <option value="15:30">15:30</option>
+                <option value="15:45">15:45</option>
+                <option value="16:00">16:00</option>
+                <option value="16:15">16:15</option>
+                <option value="16:30">16:30</option>
+                <option value="16:45">16:45</option>
+                <option value="17:00">17:00</option>
             </select>
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Event Name</label>
+            <input type="text" class="form-control" name="name" id="eventName" value="" onblur="assignName()" required>
         </div>
         <div class="form-group">
             <label for="formGroupExampleInput">Guests</label>
-            
             <div class="autocomplete">
                 <input id="myInput" class="form-control" type="text" placeholder="Search guests">
             </div>
         </div>
         <div class="form-group">
-            <label for="formGroupExampleInput">Invited Guests: </label>
-            <ul id="invitedGuests">
+            <hr>
+            <h5 class="card-title">Invited Guests:</h5>
+            <ul id="invitedGuests" style="list-style:none;margin:0;padding: 0;">
             </ul>
         </div>
         <button type="submit" class="btn btn-primary">Save</button>
@@ -69,6 +156,14 @@
 <script>
     var users = JSON.parse('{{{json users}}}');
     autocomplete(document.getElementById("myInput"), users);
+    
+    var session = JSON.parse('{{{json session}}}');
+    addOrganizerGuestItem(
+        {
+            id: session.userAccount.id,
+            name: session.userAccount.name,
+            email: session.userAccount.email
+        });
 
     $(function() {
         var today = new Date();
@@ -86,12 +181,44 @@
         document.getElementById("bookDate").value = today;
     });
 
+    function updateName(){
+        var inputName = document.getElementById("eventName").value;
+        if(inputName == "" || inputName.includes("Event")){
+            document.getElementById("eventName").value = 
+                "Event " +
+                document.getElementById("bookDate").value + " " +
+                "(" + document.getElementById("inputStartTime").value + " - " +
+                document.getElementById("inputEndTime").value + ")";
+        }
+    }
+
+    function assignName(){
+        if(document.getElementById("eventName").value == ""){
+            document.getElementById("eventName").value =  "Event " +
+                document.getElementById("bookDate").value + " " +
+                "(" + document.getElementById("inputStartTime").value + " - " +
+                document.getElementById("inputEndTime").value + ")";
+        }
+        else if (document.getElementById("eventName").value.includes("Event")){
+            return;
+        }
+        else{
+            document.getElementById("eventName").value = 
+                document.getElementById("eventName").value + " " +
+                document.getElementById("bookDate").value + " " +
+                "(" +  document.getElementById("inputStartTime").value + " - " +
+                document.getElementById("inputEndTime").value + ")";
+        }
+    }
+
     function submitform()
     {
         var frm = $('#frmAdd');
         var card = $('#mainCard');
         var formData = serializeObject(frm);
-
+        formData.guests = selectedGuests;
+        formData.userid = session.userAccount.id;
+        
         showLoader();
         $.ajax({
             type: "POST",
