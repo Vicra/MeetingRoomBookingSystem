@@ -18,7 +18,7 @@ function renderMain(request,h)
 {
     return fw.promise(async (resolve,reject) => 
     {
-        const events = await eventService.getUpcomingEvents();
+        const events = await eventService.getTodayEvents();
         resolve(h.view('views/events/main', {
             events, 
             session: request.auth.credentials

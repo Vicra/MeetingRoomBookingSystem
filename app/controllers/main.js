@@ -1,7 +1,7 @@
 //====================
 // Dependencies
 //====================
-// None
+const roomService = fw.getService('room');
 
 //====================
 // Methods
@@ -15,7 +15,10 @@ function render(request,h)
 {
     return fw.promise(async (resolve,reject) => 
     {
-        resolve(h.view('views/index', {title:'Home Page'}));
+        resolve(h.view('views/index', {
+            title:'Home Page',
+            rooms: await roomService.getTodayDashboard()
+        }));
     });
     
 }
