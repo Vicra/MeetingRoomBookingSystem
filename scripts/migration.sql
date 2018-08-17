@@ -87,7 +87,7 @@ CREATE TABLE `Events` (
   `event_type_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +96,7 @@ CREATE TABLE `Events` (
 
 LOCK TABLES `Events` WRITE;
 /*!40000 ALTER TABLE `Events` DISABLE KEYS */;
-INSERT INTO `Events` VALUES (1,1,'Meeting name','2018-08-13 22:00:00','2018-08-13 22:30:00',28,1),(2,1,'Meeting name 2','2018-08-13 22:31:00','2018-08-13 23:00:00',25,1);
+INSERT INTO `Events` VALUES (1,1,'Meeting name','2018-08-13 22:00:00','2018-08-13 22:30:00',28,1),(2,1,'Meeting name 2','2018-08-13 22:31:00','2018-08-13 23:00:00',25,1),(4,1,'Event 2018-08-15 (13:00 - 13:30)','2018-08-15 13:00:00','2018-08-15 13:30:00',25,1),(5,1,'Event 2018-08-15 (12:00 - 12:15)','2018-08-15 12:00:00','2018-08-15 12:15:00',25,1),(6,1,'Event 2018-08-16 (10:00 - 10:15)','2018-08-16 10:00:00','2018-08-16 10:15:00',34,1),(7,1,'Event 2018-08-30 (06:30 - 06:45)','2018-08-30 06:30:00','2018-08-30 06:45:00',34,1),(8,1,'Event 2018-08-17 (06:30 - 06:45)','2018-08-17 06:30:00','2018-08-17 06:45:00',25,1),(9,1,'Event 2018-08-17 (06:45 - 07:00)','2018-08-17 06:45:00','2018-08-17 07:00:00',25,1);
 /*!40000 ALTER TABLE `Events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -121,7 +121,7 @@ CREATE TABLE `Events_Participants` (
 
 LOCK TABLES `Events_Participants` WRITE;
 /*!40000 ALTER TABLE `Events_Participants` DISABLE KEYS */;
-INSERT INTO `Events_Participants` VALUES (1,30,'yes'),(1,31,'no'),(1,32,'yes'),(1,33,'maybe'),(2,30,'no'),(2,31,'yes'),(2,32,'maybe'),(2,33,'yes');
+INSERT INTO `Events_Participants` VALUES (1,30,'yes'),(1,31,'no'),(1,32,'yes'),(1,33,'maybe'),(2,30,'no'),(2,31,'yes'),(2,32,'maybe'),(2,33,'yes'),(4,25,'no'),(4,30,'no'),(4,31,'no'),(4,33,'no'),(5,25,'no'),(5,30,'no'),(5,31,'no'),(5,33,'no'),(6,33,'no'),(6,34,'no'),(7,31,'no'),(7,33,'no'),(7,34,'no'),(8,25,'no'),(8,34,'no'),(9,25,'no'),(9,34,'no');
 /*!40000 ALTER TABLE `Events_Participants` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -192,7 +192,7 @@ CREATE TABLE `Rooms` (
   `image` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -248,7 +248,7 @@ CREATE TABLE `Users` (
   UNIQUE KEY `ID_UNIQUE` (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `RoleId` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -257,7 +257,7 @@ CREATE TABLE `Users` (
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-INSERT INTO `Users` VALUES (25,'admin','admin@gmail.com','81585226e85402edac2bae633d6ee057',1,'9ed63d5d-c16a-492e-814e-276ba909093c'),(28,'Victor Ramirez','vramirez@sanservices.hn','23c9b64ccc56ebe8d9b96922b7aad2fa',1,'7dc303a0-9b0e-11e8-a8f2-194ae38c8b1e'),(30,'Mario Nunez','mnunez@sanservices.hn','727a8ec4a74274e5b96353f9c40a46af',2,'7b8e7bd0-9efd-11e8-adec-e194c7915cc1'),(31,'Alejandro Frech','afrech@sanservices.hn','1bea3d6eef15b52efb5fdb0bc828d392',2,'0a023a00-9efe-11e8-adec-e194c7915cc1'),(32,'Jesus Paz','jpaz@sanservices.hn','c20e6bbf41d258a97e0b8c23804f01a9',2,'29417e80-9efe-11e8-adec-e194c7915cc1'),(33,'Alejandro Ferrera','aferrera@sanservices.hn','fcd7d2a0600de2cfad866634d71d716e',2,'3f32b650-9efe-11e8-adec-e194c7915cc1');
+INSERT INTO `Users` VALUES (25,'admin','admin@gmail.com','81585226e85402edac2bae633d6ee057',1,'9ed63d5d-c16a-492e-814e-276ba909093c'),(30,'Mario Nunez','mnunez@sanservices.hn','727a8ec4a74274e5b96353f9c40a46af',2,'7b8e7bd0-9efd-11e8-adec-e194c7915cc1'),(31,'Alejandro Frech','afrech@sanservices.hn','1bea3d6eef15b52efb5fdb0bc828d392',2,'0a023a00-9efe-11e8-adec-e194c7915cc1'),(32,'Jesus Paz','jpaz@sanservices.hn','c20e6bbf41d258a97e0b8c23804f01a9',2,'29417e80-9efe-11e8-adec-e194c7915cc1'),(33,'Alejandro Ferrera','aferrera@sanservices.hn','fcd7d2a0600de2cfad866634d71d716e',2,'3f32b650-9efe-11e8-adec-e194c7915cc1'),(34,'Victor Ramirez','vramirez@sanservices.hn','0dcd153cee44069d32b481c2afe5bd7a',2,'d7006520-a0cc-11e8-b292-110161a84177');
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -270,4 +270,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-13 16:42:18
+-- Dump completed on 2018-08-17 15:28:12
