@@ -46,7 +46,7 @@ async function hasArticles(data)
 async function getTodayDashboard()
 {
     var rooms = await roomDAO.getRooms();
-    var todayEvents = await eventDAO.getRooms();
+    var todayEvents = await eventDAO.getTodayEvents();
     var returnObject = [];
     for (var i = 0; i < rooms.length; i++) {
         for (var j = 0; j < todayEvents.length; j++) {

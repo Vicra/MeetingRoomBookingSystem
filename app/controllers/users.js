@@ -21,6 +21,15 @@ function renderMain(request,h)
     });    
 }
 
+function getUsers(request,h)
+{
+    return fw.promise(async (resolve,reject) => 
+    {
+        const users = await usersService.getUsers();
+        resolve(users);
+    });  
+}
+
 /**
  * Render View page
  * @param {Object} request
@@ -186,5 +195,6 @@ module.exports =
     renderAdd,
     addUser,
     editUser,
-    deleteUser
+    deleteUser,
+    getUsers
 }
